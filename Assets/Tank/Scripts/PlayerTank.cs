@@ -1,4 +1,6 @@
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerTank : MonoBehaviour
 {
@@ -6,16 +8,23 @@ public class PlayerTank : MonoBehaviour
     [SerializeField] float maxForce = 90.0f;
     [SerializeField] Transform barrel;
     [SerializeField] GameObject rocket;
+    public int ammo = 10; //public so that ammo pickups will work
+    public float health = 10;
+    [SerializeField] TMP_Text ammoText;
+    //[SerializeField] TMP_Text healthText;
+    [SerializeField] Slider healthSlider;
 
     float torque;
     float force;
 
     Rigidbody rb;
+    Destructable destructable;
 
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        destructable = GetComponent<Destructable>();
     }
 
     void Update()
@@ -25,9 +34,20 @@ public class PlayerTank : MonoBehaviour
 
         
 
-        if(Input.GetMouseButtonDown(0))
+        if(Input.GetButtonDown("Fire1") && ammo >0)
         {
+            ammo--;
             Instantiate(rocket, barrel.position, barrel.rotation);
+        }
+
+        ammoText.text = "Ammo: " + ammo.ToString();
+        //healthText.text = "Health: " + health.ToString();
+        healthSlider.value = destructable.Health;
+
+        if(destructable.Health <= 0)
+        {
+            GameManager.Instance.SetGameOver(); //singleton means we did not have to hold this anywhere
+            //we can just get the instance itself
         }
     }
 
