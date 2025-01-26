@@ -9,8 +9,11 @@ public class GameManager : MonoBehaviour
 
 
     [SerializeField] GameObject titleUI;
+    [SerializeField] GameObject instructionUI;
     [SerializeField] GameObject winUI;
     [SerializeField] GameObject loseUI;
+    [SerializeField] GameObject showScoreUI;
+    [SerializeField] TMP_Text showScoreText;
     [SerializeField] Camera mainCamera;
     [SerializeField] Camera altCamera;
     [SerializeField] TMP_Text scoreText;
@@ -19,6 +22,7 @@ public class GameManager : MonoBehaviour
     enum eState
     {
         TITLE,
+        START_GAME,
         GAME,
         WIN,
         LOSE
@@ -31,6 +35,7 @@ public class GameManager : MonoBehaviour
 
     eState state = eState.TITLE;
     float timer = 0;
+    float transitionTimer = 0;
     int score = 0;
     
 
@@ -42,27 +47,46 @@ public class GameManager : MonoBehaviour
         switch (state)
         {
             case eState.TITLE:
+                titleUI.SetActive(true);
                 winUI.SetActive(false);
                 loseUI.SetActive(false);
+                instructionUI.SetActive(false);
+                showScoreUI.SetActive(false);
+
+
                 altCamera.enabled = false;
                 mainCamera.enabled = true;
-                titleUI.SetActive(true);
+                score = 0;
+
+
                 if (Input.GetKeyUp(KeyCode.Space))
                 {
+                    transitionTimer = 5;
                     OnStartGame();
-
+                }
+                break;
+            case eState.START_GAME:
+                transitionTimer -= Time.deltaTime;
+                if (transitionTimer <= 0 || Input.GetKeyDown(KeyCode.Space)) 
+                {
+                    instructionUI.SetActive(false);
+                    state = eState.GAME;
                 }
                 break;
             case eState.GAME:
 
                 break;
             case eState.WIN:
+                showScoreText.text = "Final Score: " + score;
+                showScoreUI.SetActive(true );
                 winUI.SetActive(true);
                 //print("win:");
                 break;
             case eState.LOSE:
                 //mainCamera.enabled = false;
                 altCamera.enabled = true;
+                showScoreText.text = "Final Score: " + score;
+                showScoreUI.SetActive(true);
                 loseUI?.SetActive(true);
                 //print("lose");
                 break;
@@ -79,7 +103,8 @@ public class GameManager : MonoBehaviour
     public void OnStartGame()
     {
         titleUI.SetActive(false);
-        state = eState.GAME;
+        instructionUI.SetActive(true);
+        state = eState.START_GAME;
 
     }
 

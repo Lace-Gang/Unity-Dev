@@ -25,4 +25,9 @@ public class Destructable : MonoBehaviour, IDamageable
             if(!cannotBeRemoved) Destroy(gameObject);
         }
     }
+
+    public void HealDamage(float healing)
+    {
+        health += healing;
+    }
 }

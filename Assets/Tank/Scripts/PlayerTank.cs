@@ -29,7 +29,7 @@ public class PlayerTank : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         destructable = GetComponent<Destructable>();
-        GetComponent<Rigidbody>().maxLinearVelocity = 5;
+        //GetComponent<Rigidbody>().maxLinearVelocity = 5;
         GetComponent<Rigidbody>().maxAngularVelocity = 1;
     }
 
@@ -39,6 +39,19 @@ public class PlayerTank : MonoBehaviour
         force = Input.GetAxis("Vertical") * maxForce;
         turn.Set(0, torque - force, 0);
 
+        if(force == 0)
+        {
+            GetComponent<Rigidbody>().maxLinearVelocity = 100;
+        }
+        if(force != 0 && torque == 0)
+        {
+            GetComponent<Rigidbody>().maxLinearVelocity = 10;
+        }
+        if(force != 0 && torque != 0)
+        {
+            GetComponent<Rigidbody>().maxLinearVelocity = 5;
+
+        }
 
 
         if (Input.GetButtonDown("Fire1") && ammo >0)

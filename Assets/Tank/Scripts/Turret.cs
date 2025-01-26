@@ -7,6 +7,8 @@ public class Turret : MonoBehaviour
     [SerializeField] GameObject rocketPrefab;
     [SerializeField] Transform barrel;
     [SerializeField, Range(0.5f, 5)]float spawnTime;
+    [SerializeField, Range(0f, 5f)] float spawnTimeMin;
+    [SerializeField, Range(0f, 5f)] float spawnTimeMax;
 
 
     float spawnTimer;
@@ -44,7 +46,8 @@ public class Turret : MonoBehaviour
     {
         while (true)
         {
-            //spawnTime = Random.Range(spawnTimeMin, spawnTimeMax); //would require us to have a min and max input though
+            //set min and max to zero to have a static time
+            if(spawnTimeMin > 0 &&  spawnTimeMax > 0) spawnTime = Random.Range(spawnTimeMin, spawnTimeMax); 
             yield return new WaitForSeconds(spawnTime);
             Instantiate(rocketPrefab, barrel.position, barrel.rotation);
         }
