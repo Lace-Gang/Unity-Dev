@@ -14,15 +14,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4263531196441134, guid: e1b9e21039285c042b92ea66c7f1c444, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.59
+      value: 18.37
       objectReference: {fileID: 0}
     - target: {fileID: 4263531196441134, guid: e1b9e21039285c042b92ea66c7f1c444, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.478
+      value: 1.512
       objectReference: {fileID: 0}
     - target: {fileID: 4263531196441134, guid: e1b9e21039285c042b92ea66c7f1c444, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 13.84
+      value: 13.81
       objectReference: {fileID: 0}
     - target: {fileID: 4263531196441134, guid: e1b9e21039285c042b92ea66c7f1c444, type: 3}
       propertyPath: m_LocalRotation.w
@@ -84,8 +84,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9622e67bc5914664c84900954959455a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 2
+  health: 10
+  points: 2
   destroyFX: {fileID: 1879769179923522, guid: 65932b7368590234d8163da03c2055d8, type: 3}
+  cannotBeRemoved: 0
 --- !u!54 &594318194670947544
 Rigidbody:
   m_ObjectHideFlags: 0

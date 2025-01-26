@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -10,6 +11,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject titleUI;
     [SerializeField] GameObject winUI;
     [SerializeField] GameObject loseUI;
+    [SerializeField] Camera mainCamera;
+    [SerializeField] Camera altCamera;
+    [SerializeField] TMP_Text scoreText;
+
 
     enum eState
     {
@@ -26,6 +31,7 @@ public class GameManager : MonoBehaviour
 
     eState state = eState.TITLE;
     float timer = 0;
+    int score = 0;
     
 
     // Update is called once per frame
@@ -36,6 +42,10 @@ public class GameManager : MonoBehaviour
         switch (state)
         {
             case eState.TITLE:
+                winUI.SetActive(false);
+                loseUI.SetActive(false);
+                altCamera.enabled = false;
+                mainCamera.enabled = true;
                 titleUI.SetActive(true);
                 if (Input.GetKeyUp(KeyCode.Space))
                 {
@@ -47,10 +57,14 @@ public class GameManager : MonoBehaviour
 
                 break;
             case eState.WIN:
-                print("win:");
+                winUI.SetActive(true);
+                //print("win:");
                 break;
             case eState.LOSE:
-                print("lose");
+                //mainCamera.enabled = false;
+                altCamera.enabled = true;
+                loseUI?.SetActive(true);
+                //print("lose");
                 break;
             default:
                 break;
@@ -72,6 +86,18 @@ public class GameManager : MonoBehaviour
     public void SetGameOver()
     {
         state = eState.LOSE;
+    }
+
+    public void SetGameWin()
+    {
+        state = eState.WIN;
+    }
+
+    public void increaseScore(int scoreIncrease)
+    {
+        score += scoreIncrease;
+
+        scoreText.text = "Score: " + score;
     }
 }
 

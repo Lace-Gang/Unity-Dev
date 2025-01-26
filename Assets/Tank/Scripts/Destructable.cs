@@ -3,7 +3,9 @@ using UnityEngine;
 public class Destructable : MonoBehaviour, IDamageable
 {
     [SerializeField] float health;
+    [SerializeField] int points;
     [SerializeField] GameObject destroyFX;
+    [SerializeField] bool cannotBeRemoved = false;
 
     bool destroyed = false;
 
@@ -19,7 +21,8 @@ public class Destructable : MonoBehaviour, IDamageable
         {
             destroyed = true;
             if(destroyFX != null) Instantiate(destroyFX, transform.position, Quaternion.identity);
-            Destroy(gameObject);
+            GameManager.Instance.increaseScore(points);
+            if(!cannotBeRemoved) Destroy(gameObject);
         }
     }
 }
